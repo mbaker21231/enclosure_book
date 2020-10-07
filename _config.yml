@@ -1,0 +1,17 @@
+# Book settings
+title: The Enclosure Projects
+author: Matthew J. Baker and Jonathan Conning
+logo: logo2.png
+
+
+latex:
+  latex_documents:
+    targetname: book.tex
+
+# Information about where the book exists on the web
+repository:
+  url                       : https://github.com/jhconning/enclosure_book
+
+# Configure your Binder links, such as the URL of the BinderHub.
+launch_buttons:
+  binderhub_url             : https://mybinder.org

@@ -1,0 +1,12 @@
+- file: content
+
+- part: Enclosure Theory
+  chapters:
+  - file: notebooks/enclosure_model
+
+
+- part: Extension Ideas
+  chapters:
+  - file: partial_security
+
+
