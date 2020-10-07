@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Modeling formalization &#8212; The Enclosure Projects</title>
+    <title>Other Ideas (rough) &#8212; The Enclosure Projects</title>
     
   <link rel="stylesheet" href="_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -59,8 +59,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Other Ideas (rough)" href="other_ideas.html" />
-    <link rel="prev" title="A Model of Enclosures" href="notebooks/enclosure_model.html" />
+    <link rel="prev" title="Modeling formalization" href="partial_security.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -118,13 +117,13 @@
  </span>
 </p>
 <ul class="current nav sidenav_l1">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="partial_security.html">
    Modeling formalization
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="other_ideas.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Other Ideas (rough)
   </a>
  </li>
@@ -170,7 +169,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/partial_security.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/other_ideas.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -195,6 +194,32 @@
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#isoquant-edgeworth-box-plots">
+   Isoquant Edgeworth box plots
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#differentiated-skill">
+   Differentiated skill
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#references-cited">
+     References Cited
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -202,20 +227,34 @@
         
               <div>
                 
-  <div class="section" id="modeling-formalization">
-<h1>Modeling formalization<a class="headerlink" href="#modeling-formalization" title="Permalink to this headline">¶</a></h1>
-<p>One interpretation of the underlying friction/insecurity is that individuals who have customary tenure may fear that if they leave the community, say to get a manufacturing job in the city, they will lose their customary use-rights</p>
-<p>This creates an inefficiency because:</p>
+  <div class="section" id="other-ideas-rough">
+<h1>Other Ideas (rough)<a class="headerlink" href="#other-ideas-rough" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="isoquant-edgeworth-box-plots">
+<h2>Isoquant Edgeworth box plots<a class="headerlink" href="#isoquant-edgeworth-box-plots" title="Permalink to this headline">¶</a></h2>
+<p>The model could be visualized on an Edgeworth Box isoquant diagram, and useful because it shows the effective <span class="math notranslate nohighlight">\(w/r\)</span> (isocost lines) faced on unenclosed and enclosed sites.</p>
+<p>In our model thus far <span class="math notranslate nohighlight">\(G(T,L) = \theta \cdot F(T,L)\)</span>  but it might be interesting to argue that enclosure might facilitate the adoption of more labor-intensive technologies (e.g. irrigated crops, tree crops).  Otsuka and Place <a class="bibtex reference internal" href="#otsuka2014" id="id1">[OP14]</a> have a diagram describing such a Boserupian situation that we could provide microfoundations for in our model:
+<img alt="" src="_images/Boserup_isoquants.png" /></p>
+</div>
+<div class="section" id="differentiated-skill">
+<h2>Differentiated skill<a class="headerlink" href="#differentiated-skill" title="Permalink to this headline">¶</a></h2>
+<p>We could have a skill distribution <strong>s</strong> and production of the form:</p>
 <div class="math notranslate nohighlight">
-\[
-MPL_C + MPL_C \cdot \bar T_i = APL_C = MPL_M
-\]</div>
-<p>But suppose that when they move to the city they have probability <span class="math notranslate nohighlight">\(\mu &gt; 0\)</span> of retaining their use-rights and they, in effect, lease out those rights and get paid the associated rents.  Then the relation becomes:</p>
-<div class="math notranslate nohighlight">
-\[
-MPL_C + MPL_C \cdot \bar T_i = MPL_M + \mu MPT_C \cdot T_i
-\]</div>
-<p>‘Formalization’ might be thought of as raising <span class="math notranslate nohighlight">\(\mu\)</span>.  Complete formalization at <span class="math notranslate nohighlight">\(\mu = 1\)</span> eliminates the inefficiency.</p>
+\[s_i^{1-\gamma} \left [T_i^\alpha L_i^{1-\alpha}     \right]^\gamma\]</div>
+<p>Presumably now the more skilled would want to enclose earlier, generating interesting situations.</p>
+<p>This extension would be nice because it then allows us to talk to the ‘misallocation’ literatures that start from here and say the land rental market is malfunctioning and leading to misallocation.  We’d be potentially positioned to say that and more interesting things as well (e.g. political economy might be interesting…less productive farmers would stand to gain if they can now gain title to use-rights and then lease out land without fear to the more skilled… but maybe other considerations – fallback subsistence land – might play ar role.)</p>
+<div class="section" id="references-cited">
+<h3>References Cited<a class="headerlink" href="#references-cited" title="Permalink to this headline">¶</a></h3>
+<p id="bibtex-bibliography-other_ideas-0"><dl class="citation">
+<dt class="bibtex label" id="baker2020"><span class="brackets">BC20</span></dt>
+<dd><p>Matthew J. Baker and Jonathan H. Conning. A model of Enclosures: Coordination, Efficiency, and Conflict. <em>Hunter College Department of Economics working paper</em>, 2020.</p>
+</dd>
+<dt class="bibtex label" id="otsuka2014"><span class="brackets"><a class="fn-backref" href="#id1">OP14</a></span></dt>
+<dd><p>Keijiro Otsuka and Frank Place. Changes in land tenure and agricultural intensification in sub-Saharan Africa. Technical Report, WIDER Working Paper, 2014.</p>
+</dd>
+</dl>
+</p>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -246,8 +285,7 @@ MPL_C + MPL_C \cdot \bar T_i = MPL_M + \mu MPT_C \cdot T_i
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="notebooks/enclosure_model.html" title="previous page">A Model of Enclosures</a>
-    <a class='right-next' id="next-link" href="other_ideas.html" title="next page">Other Ideas (rough)</a>
+    <a class='left-prev' id="prev-link" href="partial_security.html" title="previous page">Modeling formalization</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
