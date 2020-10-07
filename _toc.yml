@@ -4,11 +4,9 @@
   chapters:
   - file: notebooks/enclosure_model
 
-
-- part: Extension Ideas
+- part: Extensions and Materials
   chapters:
   - file: partial_security
   - file: other_ideas
-
-
+  - file: references
 
