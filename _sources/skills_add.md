@@ -1,6 +1,8 @@
 ## Differentiated Skills
 
-In the base model all producers within the agricultural sector have similar skill and access to production technologies.  
+In the model analyzed thus far all producers within the agricultural sector have similar skill and access to production technologies.  That model highlighted misallocation that could arise within the agricultural sector, but that was due fundamentally to a misallocation between enclosed and unenclosed subsectors.  There was equalization of MPLs within these subsectors, but non-equalization between subsectors.   
+
+What follows are some notes on how to extend the model in the direction of realism by allowing for differentiation among producers within the agricultural sector and the possibility of misallocations arising within subsectors due to the imperfect operation of land and or labor markets there. 
 
 A substantial literature emphasizes the role of non-traded skills in production and the considerable differentiation observed in practice.  The more differences there are between producers within a community, the more important it will be to have mechanisms such as active land rental and labor wage markets to allow access to resources to more productive farm managers, regardless of who holds claim to the resources.  Several studies have suggested that insecurity of property rights within communities may contribute to repress the operation of land lease markets, leading to possibly serious misallocation of resources.  
 
