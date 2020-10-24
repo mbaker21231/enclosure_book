@@ -7,7 +7,6 @@ All the content is based on markdown files and jupyter notebooks[^footn] combine
 
 
 
-
 % This is a comment so it won't be parsed and shown by jupyter book
 
 [^footn]: On pages with executable code, click on the binder (rocket) or google colab icon (top right of those pages) to launch the notebook or code on a cloud server. An example notebook is  [](./notebooks/enclosure_model.ipynb)
