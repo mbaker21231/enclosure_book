@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Modeling formalization &#8212; The Enclosure Projects</title>
+    <title>Differentiated Skills &#8212; The Enclosure Projects</title>
     
   <link rel="stylesheet" href="_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -59,8 +59,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Differentiated Skills" href="skills_add.html" />
-    <link rel="prev" title="A Model of Enclosures" href="notebooks/enclosure_model.html" />
+    <link rel="next" title="Edgeworth Box diagrams" href="Edgeworth_add.html" />
+    <link rel="prev" title="Modeling formalization" href="partial_security.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -118,13 +118,13 @@
  </span>
 </p>
 <ul class="current nav sidenav_l1">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="partial_security.html">
    Modeling formalization
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="skills_add.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Differentiated Skills
   </a>
  </li>
@@ -180,7 +180,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/partial_security.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/skills_add.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -205,6 +205,20 @@
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#changes-to-the-model">
+   Changes to the model
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -212,20 +226,51 @@
         
               <div>
                 
-  <div class="section" id="modeling-formalization">
-<h1>Modeling formalization<a class="headerlink" href="#modeling-formalization" title="Permalink to this headline">¶</a></h1>
-<p>One interpretation of the underlying friction/insecurity is that individuals who have customary tenure may fear that if they leave the community, say to get a manufacturing job in the city, they will lose their customary use-rights</p>
-<p>This creates an inefficiency because:</p>
+  <div class="section" id="differentiated-skills">
+<h1>Differentiated Skills<a class="headerlink" href="#differentiated-skills" title="Permalink to this headline">¶</a></h1>
+<p>In the base model all producers within the agricultural sector have similar skill and access to production technologies.</p>
+<p>A substantial literature emphasizes the role of non-traded skills in production and the considerable differentiation observed in practice.  The more differences there are between producers within a community, the more important it will be to have mechanisms such as active land rental and labor wage markets to allow access to resources to more productive farm managers, regardless of who holds claim to the resources.  Several studies have suggested that insecurity of property rights within communities may contribute to repress the operation of land lease markets, leading to possibly serious misallocation of resources.</p>
+<p>Here are some notes on extending the model to incorporate such considerations.</p>
+<p>We add a non-traded farm management skill <span class="math notranslate nohighlight">\(S\)</span> to now use a linear homogenous production as follows:</p>
 <div class="math notranslate nohighlight">
 \[
-MPL_C + MPL_C \cdot \bar T_i = APL_C = MPL_M
+F(S_i,T_i,L_i)=S_i^{1-\gamma} \left [T_i^\alpha L_i^{1-\alpha}     \right]^\gamma
 \]</div>
-<p>But suppose that when they move to the city they have probability <span class="math notranslate nohighlight">\(\mu &gt; 0\)</span> of retaining their use-rights and they, in effect, lease out those rights and get paid the associated rents.  Then the relation becomes:</p>
+<p>and we will assume that non-traded farming skill <span class="math notranslate nohighlight">\(S_i\)</span> varies by household.  This will give us a Lucas <span class="bibtex" id="id1">[lucas1978]</span> span-of-control type model with efficient farm size determined by the household’s managerial skill, and ‘profits’ in this model are interpreted as a rent to this non-traded skill.</p>
+<p>In our simpler model without skill we were able to write <span class="math notranslate nohighlight">\(APL=\left (\frac{T_i}{L_i} \right)^\alpha\)</span> and <span class="math notranslate nohighlight">\(MPL=(1-\alpha) APL\)</span>. With skill in the production we can now write:</p>
 <div class="math notranslate nohighlight">
 \[
-MPL_C + MPL_C \cdot \bar T_i = MPL_M + \mu MPT_C \cdot T_i
+APL=\frac{F(S_i,T_i,L_i)}{L_i}=
+\left ( \frac{S_i}{L_i} \right )^{1-\gamma}
+\cdot
+\left ( \frac{T_i}{L_i} \right )^{\alpha\gamma}
 \]</div>
-<p>‘Formalization’ might be thought of as raising <span class="math notranslate nohighlight">\(\mu\)</span>.  Complete formalization at <span class="math notranslate nohighlight">\(\mu = 1\)</span> eliminates the inefficiency.</p>
+<p>And <span class="math notranslate nohighlight">\(MPL=(1-\gamma)\alpha \cdot APL\)</span>.  The <span class="math notranslate nohighlight">\(\gamma=1\)</span> corresponds to the earlier model without a role for skill.</p>
+<p>It’s easy to show than an efficient allocation will require the mobile factors of production (land, labor) allocated to farms in proportion to the skill level of the farm managers:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+T_i=\frac{S_i}{\mathbf S}\cdot \bar T \\  L_i=\frac{S_i}{\mathbf S} \cdot \bar L
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf S = \sum S_i\)</span></p>
+<p>This can be verified by substituting this into the formulas for <span class="math notranslate nohighlight">\(MPL_i\)</span> and verifying that this equalizes the <span class="math notranslate nohighlight">\(MPL_i\)</span> (and the <span class="math notranslate nohighlight">\(MPT_i\)</span>) across farms to a common value of:
+$<span class="math notranslate nohighlight">\(
+MPL^e=(1-\gamma)\alpha
+\left ( \frac{\bar S}{\bar L} \right )^{1-\gamma}
+\cdot
+\left ( \frac{\bar T}{\bar L} \right )^{\alpha\gamma}
+\)</span>$
+In other words, an efficient allocation will require that the mobile factors land and labor be allocated to households in proportion to non-traded farming skill held by that household.  This model thus gives us a determinate efficient size distribution of farms and points to the need for land and labor factor markets (or other reallocation mechanisms) .</p>
+<p>Note also that with this Cobb-Douglas, <span class="math notranslate nohighlight">\(MPT = \gamma \cdot \alpha APT\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+F_T = \gamma \alpha \cdot \frac{F}{T}
+\]</div>
+<p>Presumably now the more skilled would want to enclose earlier, generating interesting situations.</p>
+<p>This extension would be nice because it then allows us to talk to the ‘misallocation’ literatures that start from here and say the land rental market is malfunctioning and leading to misallocation.  We’d be potentially positioned to say that and more interesting things as well (e.g. political economy might be interesting…less productive farmers would stand to gain if they can now gain title to use-rights and then lease out land without fear to the more skilled… but maybe other considerations – fallback subsistence land – might play ar role.)</p>
+<div class="section" id="changes-to-the-model">
+<span id="skill-changes"></span><h2>Changes to the model<a class="headerlink" href="#changes-to-the-model" title="Permalink to this headline">¶</a></h2>
+<p>this matters because..</p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -256,8 +301,8 @@ MPL_C + MPL_C \cdot \bar T_i = MPL_M + \mu MPT_C \cdot T_i
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="notebooks/enclosure_model.html" title="previous page">A Model of Enclosures</a>
-    <a class='right-next' id="next-link" href="skills_add.html" title="next page">Differentiated Skills</a>
+    <a class='left-prev' id="prev-link" href="partial_security.html" title="previous page">Modeling formalization</a>
+    <a class='right-next' id="next-link" href="Edgeworth_add.html" title="next page">Edgeworth Box diagrams</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
