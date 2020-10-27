@@ -59,7 +59,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Edgeworth Box diagrams" href="Edgeworth_add.html" />
+    <link rel="next" title="Comparing Social to Private Enclosure decisions" href="social_vs_private.html" />
     <link rel="prev" title="Modeling formalization" href="partial_security.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -126,6 +126,11 @@
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Differentiated Skills
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="social_vs_private.html">
+   Comparing Social to Private Enclosure decisions
   </a>
  </li>
  <li class="toctree-l1">
@@ -211,8 +216,8 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#changes-to-the-model">
-   Changes to the model
+  <a class="reference internal nav-link" href="#what-changes">
+   What changes?
   </a>
  </li>
 </ul>
@@ -235,18 +240,18 @@
 <p>We add a non-traded farm management skill <span class="math notranslate nohighlight">\(S\)</span> to now use a linear homogenous production as follows:</p>
 <div class="math notranslate nohighlight">
 \[
-F(S_i,T_i,L_i)=S_i^{1-\gamma} \left [T_i^\alpha L_i^{1-\alpha}     \right]^\gamma
+F(S_i,T_i,L_i)=S_i^{1-\gamma} \left [T_i^{1-\alpha}L_i^\alpha     \right]^\gamma
 \]</div>
 <p>and we will assume that non-traded farming skill <span class="math notranslate nohighlight">\(S_i\)</span> varies by household.  This will give us a Lucas <span class="bibtex" id="id1">[lucas1978]</span> span-of-control type model with efficient farm size determined by the household’s managerial skill, and ‘profits’ in this model are interpreted as a rent to this non-traded skill.</p>
-<p>In our simpler model without skill we were able to write <span class="math notranslate nohighlight">\(APL=\left (\frac{T_i}{L_i} \right)^\alpha\)</span> and <span class="math notranslate nohighlight">\(MPL=(1-\alpha) APL\)</span>. With skill in the production we can now write:</p>
+<p>In our simpler model, without skill we were able to write <span class="math notranslate nohighlight">\(APL=\left (\frac{T_i}{L_i} \right)^{1-\alpha}\)</span> and <span class="math notranslate nohighlight">\(MPL=\alpha APL\)</span>. With skill in the production we can now write:</p>
 <div class="math notranslate nohighlight">
 \[
 APL=\frac{F(S_i,T_i,L_i)}{L_i}=
 \left ( \frac{S_i}{L_i} \right )^{1-\gamma}
 \cdot
-\left ( \frac{T_i}{L_i} \right )^{\alpha\gamma}
+\left ( \frac{T_i}{L_i} \right )^{(1-\alpha)\gamma}
 \]</div>
-<p>And <span class="math notranslate nohighlight">\(MPL=(1-\gamma)\alpha \cdot APL\)</span>.  The <span class="math notranslate nohighlight">\(\gamma=1\)</span> corresponds to the earlier model without a role for skill.</p>
+<p>And <span class="math notranslate nohighlight">\(MPL=\gamma\alpha \cdot APL\)</span>.  The <span class="math notranslate nohighlight">\(\gamma=1\)</span> corresponds to the earlier model without any  role for skill.</p>
 <p>It’s easy to show than an efficient allocation will require the mobile factors of production (land, labor) allocated to farms in proportion to the skill level of the farm managers:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -255,22 +260,21 @@ T_i=\frac{S_i}{\mathbf S}\cdot \bar T \\  L_i=\frac{S_i}{\mathbf S} \cdot \bar L
 <p>where <span class="math notranslate nohighlight">\(\mathbf S = \sum S_i\)</span></p>
 <p>This can be verified by substituting this into the formulas for <span class="math notranslate nohighlight">\(MPL_i\)</span> and verifying that this equalizes the <span class="math notranslate nohighlight">\(MPL_i\)</span> (and the <span class="math notranslate nohighlight">\(MPT_i\)</span>) across farms to a common value of:
 $<span class="math notranslate nohighlight">\(
-MPL^e=(1-\gamma)\alpha
+MPL^e=\gamma\alpha
 \left ( \frac{\bar S}{\bar L} \right )^{1-\gamma}
 \cdot
-\left ( \frac{\bar T}{\bar L} \right )^{\alpha\gamma}
+\left ( \frac{\bar T}{\bar L} \right )^{(1-\alpha)\gamma}
 \)</span>$
 In other words, an efficient allocation will require that the mobile factors land and labor be allocated to households in proportion to non-traded farming skill held by that household.  This model thus gives us a determinate efficient size distribution of farms and points to the need for land and labor factor markets (or other reallocation mechanisms) .</p>
-<p>Note also that with this Cobb-Douglas, <span class="math notranslate nohighlight">\(MPT = \gamma \cdot \alpha APT\)</span>:</p>
+<p>Note also that with this Cobb-Douglas, <span class="math notranslate nohighlight">\(MPT = \gamma \cdot (1-\alpha) APT\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[
-F_T = \gamma \alpha \cdot \frac{F}{T}
+F_T = \gamma (1-\alpha) \cdot \frac{F}{T}
 \]</div>
-<p>Presumably now the more skilled would want to enclose earlier, generating interesting situations.</p>
+<div class="section" id="what-changes">
+<h2>What changes?<a class="headerlink" href="#what-changes" title="Permalink to this headline">¶</a></h2>
+<p>Speculation: the more skilled would want to enclose earlier, generating interesting situations.</p>
 <p>This extension would be nice because it then allows us to talk to the ‘misallocation’ literatures that start from here and say the land rental market is malfunctioning and leading to misallocation.  We’d be potentially positioned to say that and more interesting things as well (e.g. political economy might be interesting…less productive farmers would stand to gain if they can now gain title to use-rights and then lease out land without fear to the more skilled… but maybe other considerations – fallback subsistence land – might play ar role.)</p>
-<div class="section" id="changes-to-the-model">
-<span id="skill-changes"></span><h2>Changes to the model<a class="headerlink" href="#changes-to-the-model" title="Permalink to this headline">¶</a></h2>
-<p>this matters because..</p>
 </div>
 </div>
 
@@ -303,7 +307,7 @@ F_T = \gamma \alpha \cdot \frac{F}{T}
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="partial_security.html" title="previous page">Modeling formalization</a>
-    <a class='right-next' id="next-link" href="Edgeworth_add.html" title="next page">Edgeworth Box diagrams</a>
+    <a class='right-next' id="next-link" href="social_vs_private.html" title="next page">Comparing Social to Private Enclosure decisions</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

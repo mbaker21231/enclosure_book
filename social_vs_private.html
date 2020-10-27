@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edgeworth Box diagrams &#8212; The Enclosure Projects</title>
+    <title>Comparing Social to Private Enclosure decisions &#8212; The Enclosure Projects</title>
     
   <link rel="stylesheet" href="_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -59,8 +59,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="References Cited" href="references.html" />
-    <link rel="prev" title="Comparing Social to Private Enclosure decisions" href="social_vs_private.html" />
+    <link rel="next" title="Edgeworth Box diagrams" href="Edgeworth_add.html" />
+    <link rel="prev" title="Differentiated Skills" href="skills_add.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -128,13 +128,13 @@
    Differentiated Skills
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="social_vs_private.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Comparing Social to Private Enclosure decisions
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Edgeworth_add.html">
    Edgeworth Box diagrams
   </a>
  </li>
@@ -185,7 +185,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/Edgeworth_add.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/social_vs_private.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -216,9 +216,38 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#isoquant-edgeworth-box-plots">
-   Isoquant Edgeworth box plots
+  <a class="reference internal nav-link" href="#social-planner">
+   Social Planner
   </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#private-enclosure-decisions">
+   Private enclosure decisions
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#outside-claimant">
+     Outside claimant
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#formalizing-existing-use-right-holder">
+     Formalizing Existing use-right holder
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#privatizer-maintains-access-to-commons">
+       Privatizer maintains access to commons
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#privatizer-loses-access-to-commons">
+     Privatizer loses access to commons
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -231,15 +260,54 @@
         
               <div>
                 
-  <div class="section" id="edgeworth-box-diagrams">
-<h1>Edgeworth Box diagrams<a class="headerlink" href="#edgeworth-box-diagrams" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="isoquant-edgeworth-box-plots">
-<h2>Isoquant Edgeworth box plots<a class="headerlink" href="#isoquant-edgeworth-box-plots" title="Permalink to this headline">¶</a></h2>
-<p>The model could be visualized on an Edgeworth Box isoquant diagram, and useful because it shows the effective <span class="math notranslate nohighlight">\(w/r\)</span> (isocost lines) faced on unenclosed and enclosed sites.</p>
-<p>In our model thus far <span class="math notranslate nohighlight">\(G(T,L) = \theta \cdot F(T,L)\)</span>  but it might be interesting to argue that enclosure might facilitate the adoption of more labor-intensive technologies (e.g. irrigated crops, tree crops).  Otsuka and Place <a class="bibtex reference internal" href="references.html#otsuka2014" id="id1">[OP14]</a> have a diagram describing such a Boserupian situation that we could provide microfoundations for in our model (click to show) diagram:</p>
-<div class="toggle toggle-shown docutils container">
-<p>toggle to hide content</p>
-<p><img alt="" src="_images/Boserup_isoquants.png" /></p>
+  <div class="section" id="comparing-social-to-private-enclosure-decisions">
+<h1>Comparing Social to Private Enclosure decisions<a class="headerlink" href="#comparing-social-to-private-enclosure-decisions" title="Permalink to this headline">¶</a></h1>
+<p>These notes based on conversation 10/27/20.  Some of the discussion further down maybe a bit incomplete (it focuses on earnings from land but a bit vague on what happening to labor.)</p>
+<div class="section" id="social-planner">
+<h2>Social Planner<a class="headerlink" href="#social-planner" title="Permalink to this headline">¶</a></h2>
+<p>From our earlier analysis and normalizing  <span class="math notranslate nohighlight">\(F(\bar T,\bar L)= 1\)</span> then the social planner decides the fraction of lands <span class="math notranslate nohighlight">\(t_e\)</span> to enclose to maximize:
+$<span class="math notranslate nohighlight">\(
+\theta F(t_e,l_e)+F(1-t_e,1-l_e)-ct_e
+\)</span><span class="math notranslate nohighlight">\(
+Starting from any \)</span>t_e<span class="math notranslate nohighlight">\( it pays to increase enclosure when
+\)</span><span class="math notranslate nohighlight">\(
+(\theta - 1) F_T + (\theta - 1) F_L\cdot \frac{dl_e}{dt_e} \ge c
+\)</span>$
+In words, it’s worth enclosing the next unit of land if the resulting expected <em>increase</em> in output exceeds enclosure costs.</p>
+</div>
+<div class="section" id="private-enclosure-decisions">
+<h2>Private enclosure decisions<a class="headerlink" href="#private-enclosure-decisions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="outside-claimant">
+<h3>Outside claimant<a class="headerlink" href="#outside-claimant" title="Permalink to this headline">¶</a></h3>
+<p>When the outside claimant pays <em>c</em> and encloses land they can then turn around and rent it out.  So they just compare
+$<span class="math notranslate nohighlight">\(
+\theta F_T\ge c
+\)</span><span class="math notranslate nohighlight">\(
+This points to the possibility or excessive enclosure.  The planner cares about the *increase* in output, whereas the outside claimant cares only about how much they will earn from the land after enclosure.  They don't care that in the process they're displacing use-rights holders who lose access to the land and hence lose \)</span>F_T+F_L\cdot \frac{dl_e}{dt_e}<span class="math notranslate nohighlight">\(  . The new claimant does however put to labor to work on the land and they'll earn \)</span>\theta F_L\cdot \frac{dl_e}{dt_e}$</p>
+<p>Another way to put this is that enclosure will be excessively high when:
+$<span class="math notranslate nohighlight">\(
+\theta F_T \ge (\theta - 1) F_T + (\theta - 1) F_L\cdot \frac{dl_e}{dt_e}
+\)</span><span class="math notranslate nohighlight">\(
+or 
+\)</span><span class="math notranslate nohighlight">\(
+F_T \ge  (\theta - 1) F_L\cdot \frac{dl_e}{dt_e}
+\)</span><span class="math notranslate nohighlight">\(
+What this says is that the gain in wages the workers now earn by working on enclosed lands fall short of the land use-rights they lose due to enclosure.  The Samuelson's 1974 paper {cite}`samuelson1974`  pointed out that when \)</span>\theta=1$ labor would clearly lose out.</p>
+</div>
+<div class="section" id="formalizing-existing-use-right-holder">
+<h3>Formalizing Existing use-right holder<a class="headerlink" href="#formalizing-existing-use-right-holder" title="Permalink to this headline">¶</a></h3>
+<p>What if the claimant is an existing use-rights holder, a member of the existing community.    Two interesting cases to contrast here, depending on whether the privatizer maintains or loses access to the commons.</p>
+<div class="section" id="privatizer-maintains-access-to-commons">
+<h4>Privatizer maintains access to commons<a class="headerlink" href="#privatizer-maintains-access-to-commons" title="Permalink to this headline">¶</a></h4>
+<p>If they maintain access then they’re basically acting like an outside claimant.  They gain <span class="math notranslate nohighlight">\(\theta F_T\)</span> but still have access to their share of commons land so in effect they lose very little there.  So they basically compare <span class="math notranslate nohighlight">\(\theta F_T&gt;c\)</span></p>
+</div>
+</div>
+<div class="section" id="privatizer-loses-access-to-commons">
+<h3>Privatizer loses access to commons<a class="headerlink" href="#privatizer-loses-access-to-commons" title="Permalink to this headline">¶</a></h3>
+<p>If on the other hand the person who withdraws their share of land to enclose it then loses access to remaining common lands then they gain <span class="math notranslate nohighlight">\(\theta F_T\)</span> but they lose <span class="math notranslate nohighlight">\(F_T\)</span>.  So they compare
+$<span class="math notranslate nohighlight">\(
+(\theta-1)F_T&gt;c
+\)</span>$</p>
 </div>
 </div>
 </div>
@@ -272,8 +340,8 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="social_vs_private.html" title="previous page">Comparing Social to Private Enclosure decisions</a>
-    <a class='right-next' id="next-link" href="references.html" title="next page">References Cited</a>
+    <a class='left-prev' id="prev-link" href="skills_add.html" title="previous page">Differentiated Skills</a>
+    <a class='right-next' id="next-link" href="Edgeworth_add.html" title="next page">Edgeworth Box diagrams</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
