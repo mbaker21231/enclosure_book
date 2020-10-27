@@ -8,5 +8,6 @@
   chapters:
   - file: partial_security
   - file: skills_add
+  - file: social_vs_private
   - file: Edgeworth_add
   - file: references
