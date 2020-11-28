@@ -46,12 +46,12 @@ def req(te, th=1, alp=1/2, tlbar=1):
 def leo(te, th, alp):
     '''optimal labor allocation (from MPLe = MPLu) given enclosed land a'''
     lam = th**(1/(1-alp))
-    return lam*te/(1-te+lam*te)
+    return lam*te/(1+lam*te-te)
 
 def le(te, th, alp):
     '''eqn labor share on enclosed for given te when APL=MPL  '''
-    lam = (th*alp)**(1/(1-alp))
-    return lam*te/(1-te+lam*te)
+    lam = (alp*th)**(1/(1-alp))
+    return lam*te/(1+lam*te-te)
 
 def totalq(te, th, alp):
     '''total output in the economy given.
@@ -64,7 +64,7 @@ def plotY(alp = 0.5, th = 1, c = 1):
     te = np.linspace(0, 1.0, 20)
     plt.title("Output net of enclosure costs as function of te")
     plt.plot(te, totalq(te, th, alp) - c*te*Tbar)
-    plt.xlabel(r't_e')
+    plt.xlabel(r'$t_e$')
     plt.xlim(0,1)
 
 
@@ -78,10 +78,10 @@ def plotle(te=1/2, th=1, alp=1/2):
     ax.set_xlim(0,1)
     ax.set_ylim(0,1)
     ax.set_aspect('equal', 'box')
-    ax.plot(tte, le(tte, th, alp))
-    ax.plot(tte, leo(tte, th, alp))  
+    ax.plot(tte, le(tte, th, alp), linewidth=2)
+    ax.plot(tte, leo(tte, th, alp), linewidth=2)  
     ax.plot([0,1],[0, 1],linestyle=':')
-    ax.plot([0,te],[0, leq],linestyle=':')
+    ax.plot([0,te],[0, leq],linestyle='-')
     ax.scatter(te, leq, label='private')
     ax.scatter(te, leop, label='social')
     ax.axhline(y=leq, xmin=0, xmax=te, linestyle=':')
@@ -90,11 +90,14 @@ def plotle(te=1/2, th=1, alp=1/2):
     ax.axvline(x=te, ymin=0, ymax=leop, linestyle=':')
     ax.set_xlabel(r'$t_e$', fontsize=15)
     ax.set_ylabel(r'$l_e$', fontsize=15)
-    lam = (th*alp)**(1/(1-alp))
-    ax.text(0.1, 0.9, r'$\Lambda =$'+f'{lam: 3.2f}'+r'$\ \ \ \frac{l_e}{t_e}=$'+ f'{leq/(te+0.001):3.1f}', fontsize=18)
-    ax.legend(loc='lower right')
+    #lam = (th*alp)**(1/(1-alp))
+    #ax.text(0.05, 0.9, r'$\theta=$' +f'{th: 2.1f}' r', $\Lambda =$'
+    #      + f'{lam: 3.2f}' + r', $\ \ \ \frac{l_e}{t_e}=$'
+    #      + f'{leq/(te+0.001):3.1f}', fontsize=16)
+    ax.legend(loc='lower right', fontsize=14)
 
     
+
 def plotreq(th=1, alp=1/2, tlbar=1, c=0, wplot=True):
     '''plot rental rate as function of te
        optionally also plot wages '''
@@ -109,28 +112,34 @@ def plotreq(th=1, alp=1/2, tlbar=1, c=0, wplot=True):
     #ax.text(1.01,r1-0.025,r'$r^*(1)$',fontsize=13)
     #ax.text(-0.13,r0-0.025,r'$r^*(0)$',fontsize=13)
     ax.grid()
-    ax.axhline(y=c,linestyle=':')
+    ax.axhline(y=c,linestyle='--', label=r'$c$')
     if wplot:
         ax.plot(tte, weq(tte, th, alp, tlbar), label= r'$w$')
     lam = (th*alp)**(1/(1-alp))
     ax.legend()
 
 
+
 def plotmpts(te=1/2, alp=1/2, th=1, tlbar=Tbar/Lbar):
     '''Plot a DMG stype partial eqn labor demand graph '''
     ll = np.linspace(0.001, 0.999, 50)
-    leop = leo(te, th, alp)
-    plt.figure(figsize=(10,6))
-    plt.plot(ll, mplu(te, 1-ll, alp, th, tlbar)) 
-    plt.plot(ll, mple(te, ll, alp, 1, tlbar))
-    plt.plot(ll, aple(te, ll, alp, 1, tlbar))
-    plt.xlabel('l - labor')
-    plt.axvline(1-le(te, th, alp), linestyle=':') 
-    plt.axvline(leop, linestyle='-') 
-    plt.axhline(weq(te, th=1, alp=1/2, tlbar=1), linestyle=':')
-    plt.title('MPL and APL on enclosed and unenclosed lands')
-    plt.ylim(0,3)
-    plt.xlim(0,1)
+    leop = leo(te, th, alp)   #optimal 
+    leam = le(te, th, alp)    #private
+    wc = mplu(te, leop)
+    we = mple(te, leam, th=th )
+    fig, ax = plt.subplots(figsize=(10,6))
+    ax.spines['top'].set_visible(False)
+    ax.plot(ll, aplu(te, ll, alp, 1, tlbar), linewidth=4)
+    ax.plot(ll, mplu(te, ll, alp, 1, tlbar)) 
+    ax.plot(ll, mple(te, 1-ll, alp, th, tlbar), linewidth=4)
+    ax.set_xlabel('l - labor')
+    ax.vlines(x=1-leam, ymin=0, ymax=we, linestyle=':') 
+    ax.vlines(x=leop, ymin=0, ymax=wc, linestyle=':') 
+    ax.axhline(weq(te, th=1, alp=1/2, tlbar=1), linestyle=':')
+    ax.set_title('Labor allocation given '+r'$t_e$')
+    ax.set_ylim(0,1.5)
+    ax.set_xlim(0,1)
+   
 
 def simplempl(te=1/2, alp=1/2, th=1, tlbar=Tbar/Lbar):
     ll = np.linspace(0.001, 0.999, 50)
@@ -174,35 +183,61 @@ def z(te, th, alp, c, lbar):
     return lbar**alp * (1+(lam-1)*te)**(1-alp) - c*te
 
 def teopt(th, alp, c, lbar):
-    '''zprime= derivative of z. Determines efficient enclosure. If 
-        zprime(0)<0  : no enclosure 
-        zprime(1)>0  : full enclosure
-        zprime(0)>0 and zprime(1)<0 : partial enclosure
-           then solve for teopt from foc
+    '''zprime= derivative of z. Determines efficient enclosure.
         '''
     lam = th**(1/(1-alp))
     zprime = lambda te : (1-alp)*(lam-1)*lbar**alp  * (1+(lam-1)*te)**(-alp) - c
-    if zprime(0)<0:
+    if zprime(0)<0:   # no enclosure
         teopt = 0
-    elif zprime(1)>0:
+    elif zprime(1)>0:  # full enclosure
         teopt = 1
-    else:
+    else:              # partial enclosure   
         teopt = ( ( ((1-alp)*(lam-1)*lbar**alp)/c)**(1/alp)  -1  )/(lam-1)
     return teopt
+
+def dwl(th, alp, c, lbar):
+    teo = teopt(th, alp, c, lbar)
+    zo = z(teo, th, alp, c, lbar)
+    return  zo*teo
 
 def plotz(th, alp, c, lbar):
     teo= teopt(th, alp, c, lbar)
     tte = np.linspace(0,1,20)
-    plt.scatter(teo,z(teo, th, alp, c, lbar), s=40, clip_on=False )
+    plt.scatter(teo, z(teo, th, alp, c, lbar), s=40, clip_on=False )
     plt.axvline(teo, ymin=0, ymax=z(teo, th, alp, c, lbar) ,  linestyle='dashed')
     plt.plot(tte, z(tte, th, alp, c, lbar) )
     plt.xlim(0,1)
+    plt.xlabel(r'$t_e$'+' -- pct land enclosed')
+    plt.ylabel(r'$z(t_e)$')
     #plt.ylim(1.1,1.5)
     # to plot y(te) and c*te as well:
     #plt.plot(tte,c*tte  )
     #plt.plot(tte, z(tte, th, alp, c, lbar)+c*tte )
 
 ## Log linear DMG type plot
+
+def plotz2(ax=None, th=1, alp=1/2, c=1, lbar=Lbar):
+    if ax is None:
+        fig, ax =  plt.subplots(figsize=(5,5))
+    teo= teopt(th, alp, c, lbar)
+    tte = np.linspace(0,1,20)
+    ax.scatter(teo,z(teo, th, alp, c, lbar), s=40, clip_on=False )
+    ax.plot(tte, z(tte, th, alp, c, lbar) )
+    ax.set_xlim(0,1)
+    ax.axvline(teo, ymin=0, ymax=z(teo, th, alp, c, lbar) ,  linestyle='dashed')
+    plt.xlabel(r'$t_e$'+' -- pct land enclosed')
+    plt.ylabel(r'$z(t_e)$')
+    #ax.axhline(c, color='red')
+    #plt.ylim(1.1,1.5)
+    #to plot y(te) and c*te as well:
+    #plt.plot(tte,c*tte  )
+    #plt.plot(tte, z(tte, th, alp, c, lbar)+c*tte )
+    return ax
+
+
+## Log linear DMG type plot
+
+
 
 
 def plotdmg(te=1/2, alp=1/2, th=1, tlbar=Tbar/Lbar):
@@ -220,3 +255,74 @@ def plotdmg(te=1/2, alp=1/2, th=1, tlbar=Tbar/Lbar):
     #plt.ylim(0,3)
     #plt.xlim(0,1)
 
+
+
+def partnplote(c = 1, alp= 2/3, cond_opt=True):
+    '''Plot of equilibria loci and partitions in theta-popdensity space
+       Social Planner choices
+    '''
+
+    ##### Truncated ranges applicable only at certain points ####
+    start, stop, step = 1.1, 2.1, 0.01
+    the_1 = np.arange(start, stop, step)
+
+    ln_po0 = np.log(( c                      / ((the_1**(1/(1-alp)) - 1)*(1-alp))  ) **(1/alp))
+    ln_po1 = np.log(( c*the_1**(alp/(1-alp)) / ((the_1**(1/(1-alp)) - 1)*(1-alp))  ) **(1/alp))
+
+    ##### For these lines, we need separate plot ranges, so which run to the critical value
+    cv = 1 / alp
+
+    the_r1 = np.arange(start, cv, step)
+    the_r2 = np.arange(cv, stop, step)
+
+    ln_ps0 = np.log(( alp*c                  / (((the_r2*alp)**(1/(1-alp))*(1+alp) - alp)*(1-alp))  ) **(1/alp))
+    ln_ps1 = np.log(( c                      / (the_r2*(1-alp)  ) ) **(1/alp))
+    ln_ps  = np.log(( c/(the_r1 - 1))**(1/alp))
+
+    fig, ax = plt.subplots(figsize=(10, 8))
+
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['left'].set_linewidth(2)
+    ax.spines['bottom'].set_linewidth(2)
+
+    xlbl = ax.set_xlabel(r'$\theta$', fontsize=20, loc='right')
+    ylbl = ax.set_ylabel(r'$\ln(\overline{l})$', fontsize=20)
+
+    # Shift the label on the x-axis a little bit
+    #xpos = list(xlbl.get_position())
+    #xpos[0] = xpos[0]+.41
+    #xpos[1] = xpos[1]-.02
+    #ax.xaxis.set_label_coords(xpos[0], xpos[1])
+
+    ax.set_xticks([])
+    #ax.set_yticks([])
+
+    oline1 = ax.plot(the_1, ln_po0, color= 'black')
+    bline1 = ax.plot(the_1, ln_po1, color= 'black')
+
+    if cond_opt:
+        gline1 = ax.plot(the_r2, ln_ps0, color= 'black', linestyle='dashed')
+        pline1 = ax.plot(the_r2, ln_ps1, color= 'black', linestyle='dashed')
+        bkline = ax.plot(the_r1, ln_ps,  color='black', linestyle='dashed')
+
+    vline1 = ax.axvline(1/alp, ymax=.95, linestyle=':', color='black')
+    vline2 = ax.axvline(1, ymax=.95, linestyle=':', color='black')
+
+    ep = np.max(the_1)+.021
+
+    t1 = ax.text(ep, np.min(ln_po0), r'$l^o_0$', fontsize=16)
+    t2 = ax.text(ep, np.min(ln_po1)+.05, r'$l^o_1$', fontsize=16)
+
+    if cond_opt:
+        t3 = ax.text(ep, np.min(ln_ps0), r'$l^*_0$', fontsize=16)
+        t4 = ax.text(ep, np.min(ln_ps1)-.05, r'$l^*_1$', fontsize=16)
+        t5 = ax.text(cv-.1, np.min(ln_ps)-.04, r'$l^*$', fontsize=16)
+
+    ax.text(cv, np.min(ln_po0)-.5, r'$\frac{1}{\alpha}$', fontsize=16)
+    ax.text(1, np.min(ln_po0)-.5, r'$1$', fontsize=16)
+
+    if cond_opt == False:
+        fig.savefig('social_optimum.png')
+    else:
+        fig.savefig('social_opt_cond.png')
