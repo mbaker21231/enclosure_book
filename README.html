@@ -217,9 +217,10 @@
 <ul class="simple">
 <li><p>It uses the <a class="reference external" href="https://jupyterbook.org/intro.html">jupyter book</a> framework to transform content from jupyter notebooks and markdown files into static HTML on github pages.</p>
 <ul>
-<li><p>The left contnet navigation bar is created by the <a class="reference external" href="https://github.com/jhconning/enclosure_book/blob/main/_toc.yml">_toc.yml</a> file</p></li>
-<li><p>Most other info about the site is in <a class="reference external" href="https://github.com/jhconning/enclosure_book/blob/main/_config.yml">_config.yml</a></p></li>
-<li><p>Any new push to the site triggers a <a class="reference external" href="https://jupyterbook.org/publish/gh-pages.html?highlight=github%20action">github action</a> that launches a virtual machine in the cloud that rebuilds the jupyterbook site (relevant script <a class="reference external" href="https://github.com/jhconning/enclosure_book/blob/main/.github/workflows/book.yml">here</a>)</p></li>
+<li><p>The left navigation bar on the site is created by the <a class="reference external" href="https://github.com/jhconning/enclosure_book/blob/main/_toc.yml">_toc.yml</a> file</p></li>
+<li><p>Most other info for the site is set in <a class="reference external" href="https://github.com/jhconning/enclosure_book/blob/main/_config.yml">_config.yml</a></p></li>
+<li><p>Any new push to this repo triggers a <a class="reference external" href="https://jupyterbook.org/publish/gh-pages.html?highlight=github%20action">github action</a> that launches a virtual machine in the cloud that rebuilds the jupyterbook site with the new content (relevant script <a class="reference external" href="https://github.com/jhconning/enclosure_book/blob/main/.github/workflows/book.yml">here</a>)</p></li>
+<li><p>Typical workflow:  use jupyter book to build a local copy of the site on your machine.  Then just push the relevant changed markdown/notebooks.</p></li>
 </ul>
 </li>
 </ul>
