@@ -3,11 +3,3 @@
 - part: Enclosure Theory
   chapters:
   - file: notebooks/enclosure_model
-
-- part: Extensions and Materials
-  chapters:
-  - file: partial_security
-  - file: skills_add
-  - file: social_vs_private
-  - file: Edgeworth_add
-  - file: references

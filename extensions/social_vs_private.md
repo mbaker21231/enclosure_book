@@ -6,6 +6,9 @@ These notes based on conversation 10/27/20.  Some of the discussion further down
 
 From our earlier analysis and normalizing  $F(\bar T,\bar L)= 1$ then the social planner decides the fraction of lands $t_e$ to enclose to maximize:
 
+---
+
+
 
 $$
 \theta F(t_e,l_e)+F(1-t_e,1-l_e)-ct_e
@@ -74,3 +77,4 @@ $$
 
 
 
+[Back to Home](content.md)
