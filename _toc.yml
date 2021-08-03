@@ -1,5 +1,15 @@
-- file: content
+format: jb-book
+root: content
 
-- part: Enclosure Theory
-  chapters:
-  - file: notebooks/enclosure_model
+chapters:
+- file: notebooks/enclosure_model
+
+- file: extensions/extensions
+  sections:
+  - file: extensions/skills_diff
+  - file: extensions/partial_exclusive
+  - file: slides/rise
+
+
+
+  

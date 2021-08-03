@@ -6,9 +6,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from ipywidgets import interact, fixed
+import warnings
+warnings.filterwarnings('ignore')
 
 Tbar=100
 Lbar=100
+
+# Production, average and marginal products
 
 def f(T, L, a=1/2, th=1):
     '''production technology on commons/un-enclosed land'''
@@ -35,15 +39,7 @@ def aplu(te,le, a=1/2, th=1, tlbar=Tbar/Lbar):
     '''average product of Labor on unenclosed land'''
     return aple(te, le, a, th, tlbar)
 
-def weq(te, th=1, alp=1/2, tlbar=1):
-    '''Decentralized Equilibrium wage'''
-    lam = (th*alp)**(1/(1-alp))
-    return (1-te+lam*te)**(1-alp) * (tlbar)**(1-alp)
-
-def req(te, th=1, alp=1/2, tlbar=1):
-    '''Decentralized Equilibrium rental'''
-    lam = (th*alp)**(1/(1-alp))
-    return (1-alp)*th * lam**alp * (1-te+lam*te)**(-alp) * (tlbar)**(-alp)
+# Labor allocations condtional on te
 
 def leo(te, th, alp):
     '''optimal labor allocation (from MPLe = MPLu) given enclosed land share te'''
@@ -55,25 +51,112 @@ def le(te, th, alp):
     lam = (alp*th)**(1/(1-alp))
     return lam*te/(1+lam*te-te)
 
-def totalq(te, th, alp):
+def totalq(te, th, alp, Tbar, Lbar):
     '''total output in the economy given te.
        Note costs of enclosure are not subtracted.'''
     leq = le(te, th, alp)
-    return f(Tbar,Lbar,alp, th) * ( th*f(te, leq, alp, th) + f(1-te, 1-leq, alp, 1) )
+    return f(Tbar, Lbar, alp, 1) * ( th*f(te, leq, alp, th) + f(1-te, 1-leq, alp, 1) )
 
-def plotY(alp = 0.5, th = 1, c = 1):
+
+#  Social Optimum
+
+def z(te, th, alp, lbar):
+    '''output per unit land net of enclosure cost
+       $z(t_e) = \bar l^\alpha \left(1+(\Lambda^0-1)t_e\right)^{1-\alpha}-c\bar t_e$
+       To find optimal enclosure rate, given MPLs equalized '''
+    lam = th**(1/(1-alp))
+    return lbar**alp * (1+(lam-1)*te)**(1-alp) 
+
+
+
+def zprime(te, th, alp, lbar):
+    '''rate of change of total net benefits per unit land.
+       used to find optimal enclosure rate, given MPLs equalized '''
+    lam = th**(1/(1-alp))
+    return (1-alp)* (lam-1)*(lbar**alp)* ((lam-1)*te+1)**(-alp) 
+
+
+def teopt(th, alp, c, lbar):
+    '''Social Optimum level of enclosure
+        zprime= derivative of z. Determines efficient enclosure. If 
+        zprime(0)<c  : no enclosure 
+        zprime(1)>c  : full enclosure
+        zprime(0)>c and zprime(1)<c : partial enclosure
+           then solve for teopt from foc
+        '''
+    lam = th**(1/(1-alp))
+    zp = lambda te: zprime(te, th, alp, lbar)
+    if zp(0)<c:
+        teopt = 0
+    elif zp(1)>c:
+        teopt = 1
+    else:
+        teopt = ( ( ((1-alp)*(lam-1)*lbar**alp)/c)**(1/alp)  -1  )/(lam-1)
+    return teopt
+
+
+# Decentralized Equilibria
+
+def req(te, th=1, alp=1/2, tlbar=1):
+    '''Decentralized Equilibrium rental'''
+    lam = (th*alp)**(1/(1-alp))
+    return th * (1-alp) * lam**alp * (1-te+lam*te)**(-alp) * (tlbar)**(alp)
+
+
+def weq(te, th=1, alp=1/2, tlbar=1):
+    '''Decentralized Equilibrium wage'''
+    lam = (th*alp)**(1/(1-alp))
+    return (1-te+lam*te)**(1-alp) * (tlbar)**(1-alp)
+
+
+def tepv(th, alp, c, lbar):
+    '''Decentralized level of enclosure. 
+    When (theta < 1/alpha), rental rate on enclosed land is increasing in the enclosure rate and:
+        req(1)<c  : no private enclosure 
+        req(0)>c  : full private enclosure
+        req(0)<c and req(1)>c : multiple equilibria 
+    When (theta > 1/alpha):
+        '''
+    lam = th**(1/(1-alp))
+
+    if req(1, th, alp, lbar)<c:
+        tepv = 0
+    elif req(0, th, alp, lbar)>c:
+        tepv = 1
+    else:
+        teopt = ( ( ((1-alp)*(lam-1)*lbar**alp)/c)**(1/alp)  -1  )/(lam-1)
+    return teopt
+
+
+def dwl(th, alp, c, lbar):
+    teo = teopt(th, alp, c, lbar)
+    zo = z(teo, th, alp, c, lbar)
+    return  zo*teo
+
+
+
+
+
+def plotY(alp = 0.5, th = 1, c = 1, Tbar=Tbar, Lbar=Lbar):
     '''Plot total income net of clearing costs'''
     te = np.linspace(0, 1.0, 20)
+    f, ax = plt.subplots(figsize=(8,8))
     plt.title("Output net of enclosure costs as function of te")
     #plt.plot(te, totalq(te, th, alp)  )
     #plt.plot(te, c*te*Tbar )
-    plt.plot(te, ( totalq(te, th, alp) ),  label= r'total' )
-    plt.plot(te, ( totalq(te, th, alp)-c*te*Tbar),  label= r'total-cTe' )
-    plt.plot(te, req(te, th, alp, 1)*te*Tbar,  label= r'$r*Te$')
-    plt.plot(te, c*te*Tbar,   label= r'$c*Te$')
+    plt.plot(te, ( totalq(te, th, alp, Tbar, Lbar) ),  label= r'total' )
+    plt.plot(te, ( totalq(te, th, alp, Tbar, Lbar)-c*te*Tbar),  label= r'total-cTe' )
+    plt.plot(te, req(te, th, alp, Lbar/Tbar)*te*Tbar,  label= r'$r*Te$')
+    plt.plot(te, c*te*Tbar,   label= r'$c*Te$', linestyle='dashed')
+    plt.plot(te, req(te, th, alp, Lbar/Tbar)*te*Tbar - c*te*Tbar,   label= r'$(r-c)*Te$', linestyle='dashed')
+    plt.axhline(totalq(0,th,alp, Tbar, Lbar), linestyle='dashed')
     plt.xlabel(r'$t_e$')
     plt.xlim(0,1)
+    #plt.ylim(0,200)
+    plt.grid()
     plt.legend()
+
+
 
 
 
@@ -183,41 +266,13 @@ def simplempl2(te=1/2, alp=1/2, th=1, tlbar=Tbar/Lbar):
 
 ## More plots 
 
-def z(te, th, alp, c, lbar):
-    '''output per unit land net of enclosure cost
-       $z(t_e) = \bar l^\alpha \left(1+(\Lambda^0-1)t_e\right)^{1-\alpha}-c\bar t_e$
-       To find optimal enclosure rate, given MPLs equalized '''
-    lam = th**(1/(1-alp))
-    return lbar**alp * (1+(lam-1)*te)**(1-alp) - c*te
-
-def teopt(th, alp, c, lbar):
-    '''zprime= derivative of z. Determines efficient enclosure. If 
-        zprime(0)<0  : no enclosure 
-        zprime(1)>0  : full enclosure
-        zprime(0)>0 and zprime(1)<0 : partial enclosure
-           then solve for teopt from foc
-        '''
-    lam = th**(1/(1-alp))
-    zprime = lambda te : (1-alp)*(lam-1)*lbar**alp  * (1+(lam-1)*te)**(-alp) - c
-    if zprime(0)<0:
-        teopt = 0
-    elif zprime(1)>0:
-        teopt = 1
-    else:
-        teopt = ( ( ((1-alp)*(lam-1)*lbar**alp)/c)**(1/alp)  -1  )/(lam-1)
-    return teopt
-
-def dwl(th, alp, c, lbar):
-    teo = teopt(th, alp, c, lbar)
-    zo = z(teo, th, alp, c, lbar)
-    return  zo*teo
-
 def plotz(th, alp, c, lbar):
     teo= teopt(th, alp, c, lbar)
     tte = np.linspace(0,1,20)
-    plt.scatter(teo, z(teo, th, alp, c, lbar), s=40, clip_on=False )
-    plt.axvline(teo, ymin=0, ymax=z(teo, th, alp, c, lbar) ,  linestyle='dashed')
-    plt.plot(tte, z(tte, th, alp, c, lbar) )
+    plt.scatter(teo, z(teo, th, alp, lbar) - c*teo, s=40, clip_on=False )
+    plt.axvline(teo, ymin=0, ymax=z(teo, th, alp, lbar) ,  linestyle='dashed')
+    plt.plot(tte, z(tte, th, alp, lbar) - c*tte )
+    plt.title(r'$z(t_e)-c\cdot t_e$')
     plt.xlim(0,1)
     plt.xlabel(r'$t_e$'+' -- pct land enclosed')
     plt.ylabel(r'$z(t_e)$')
@@ -226,6 +281,20 @@ def plotz(th, alp, c, lbar):
     #plt.plot(tte,c*tte  )
     #plt.plot(tte, z(tte, th, alp, c, lbar)+c*tte )
 
+def plotzprime(th, alp, c, lbar):
+    '''plots z' vs c'''
+    teo= teopt(th, alp, c, lbar)
+    tte = np.linspace(0,1,20)
+    plt.scatter(teo, zprime(teo, th, alp, lbar), s=40, clip_on=False )
+    plt.axvline(teo, ymin=0, ymax = z(teo, th, alp, lbar) ,  linestyle='dashed')
+    plt.axhline(c, xmin=0, xmax = 1,  linestyle='dashed')
+    plt.plot(tte, zprime(tte, th, alp,  lbar) )
+    plt.xlim(0,1)
+    plt.xlabel(r'$t_e$'+' -- pct land enclosed')
+    plt.ylabel(r'$z(t_e)$')
+
+
+
 ## Log linear DMG type plot
 
 def plotz2(ax=None, th=1, alp=1/2, c=1, lbar=Lbar):
@@ -233,10 +302,10 @@ def plotz2(ax=None, th=1, alp=1/2, c=1, lbar=Lbar):
         fig, ax =  plt.subplots(figsize=(5,5))
     teo= teopt(th, alp, c, lbar)
     tte = np.linspace(0,1,20)
-    ax.scatter(teo,z(teo, th, alp, c, lbar), s=40, clip_on=False )
-    ax.plot(tte, z(tte, th, alp, c, lbar) )
+    ax.scatter(teo, z(teo, th, alp, lbar) - c*teo, s=40, clip_on=False )
+    ax.plot(tte, z(tte, th, alp, lbar) - c*tte )
     ax.set_xlim(0,1)
-    ax.axvline(teo, ymin=0, ymax=z(teo, th, alp, c, lbar) ,  linestyle='dashed')
+    ax.axvline(teo, ymin=0, ymax=z(teo, th, alp, lbar)-c*teo ,  linestyle='dashed')
     plt.xlabel(r'$t_e$'+' -- pct land enclosed')
     plt.ylabel(r'$z(t_e)$')
     #ax.axhline(c, color='red')
@@ -314,7 +383,7 @@ def socpart(c = 1, alp= 2/3, cond_opt=True, logpop=True):
     ax.xaxis.set_label_coords(xpos[0], xpos[1])
 
     ax.set_xticks([])
-    ax.set_ylim(0,5)
+    #ax.set_ylim(0,5)
     if logpop:
         ax.set_yticks([])
         ax.autoscale()
@@ -351,7 +420,9 @@ def socpart(c = 1, alp= 2/3, cond_opt=True, logpop=True):
     #    fig.savefig('social_opt_cond.png')
 
 
-def prvpart(c = 1, alp= 2/3, full_diag = False, logpop=True):
+def prvpart(c = 1, alp= 2/3, full_diag = False, logpop=True, ax= None):
+    if ax is None:
+        ax = plt.gca()
     start = 1.1
     finish = 2.1
     cv = 1 / alp
@@ -392,9 +463,7 @@ def prvpart(c = 1, alp= 2/3, full_diag = False, logpop=True):
     if logpop:
         ln_pd0, ln_pd1, ln_pdgg = np.log(ln_pd0), np.log(ln_pd1), np.log(ln_pdgg)
 
-
-
-    fig, ax = plt.subplots(figsize=(10, 8))
+    #fig, ax = plt.subplots(figsize=(10, 8))
 
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
@@ -411,17 +480,17 @@ def prvpart(c = 1, alp= 2/3, full_diag = False, logpop=True):
     xpos[1] = xpos[1]-.02
     ax.xaxis.set_label_coords(xpos[0], xpos[1])
 
-    ax.set_xticks([])
-    ax.set_ylim(0,6)
-    if logpop:
-        ax.set_yticks([])
-        ax.autoscale()
-        ylbl = ax.set_ylabel(r'$ln(\overline{l})$', fontsize=18)
+    #ax.set_xticks([])
 
-    
+    ax.set_ylim(0,5)
+    ax.set_xlim(0.9, finish)
+    if logpop:
+        #ax.set_yticks([])
+        ax.set_ylim(-0.5,4)
+        #ax.autoscale()
+        ylbl = ax.set_ylabel(r'$ln(\overline{l})$', fontsize=18)   
 
     ep = np.max(the_1)+.021
-
     # Conditional optimum stuff commented out...
 
     if full_diag:
