@@ -35,15 +35,22 @@ def aplu(te,le, a=1/2, th=1, tlbar=Tbar/Lbar):
     '''average product of Labor on unenclosed land'''
     return aple(te, le, a, th, tlbar)
 
+def Lambda(th, alp, mu):
+    ''' Key expression.
+      mu = 0 : APL=MPL
+      mu = 1 : MPL = MPL etc
+    '''
+    return (alp*th/(1-mu+alp*mu) )**(1/(1-alp))
+
+
 def req(te, th=1, alp=1/2, ltbar=1, mu=0):
     '''Decentralized Equilibrium rental'''
-    lam = (alp*th/(1-mu+alp*mu) )**(1/(1-alp))
+    lam = Lambda(th, alp, mu)
     return (1-alp)*th * lam**alp * (1+(lam-1)*te)**(-alp) * (ltbar)**(alp)
-
 
 def weq(te, th=1, alp=1/2, tlbar=1, mu =0):
     '''Decentralized Equilibrium wage'''
-    lam = (alp*th/(1-mu+alp*mu) )**(1/(1-alp))
+    lam = Lambda(th, alp, mu)
     return (1-te+lam*te)**(1-alp) * (tlbar)**(1-alp)
 
 def leo(te, th, alp):
@@ -58,7 +65,7 @@ def le(te, th, alp, mu):
        mu = 1:   MPLc = MPLe,   leo in paper
        mu in (0,1)   in between partly secure
        '''
-    lam = (alp*th/(1-mu+alp*mu) )**(1/(1-alp))
+    lam = Lambda(th, alp, mu)
     return lam*te/(1+lam*te-te)
 
 def totalq(te, th, alp, mu):
@@ -231,7 +238,7 @@ def tepvt(th, alp, c, lbar, mu):
            then solve for teopt from foc
         '''
     thresh = (1-mu+alp*mu)/alp    
-    lam = (alp*th/(1-mu+alp*mu))**(1/(1-alp))
+    lam = Lambda(th, alp, mu)
     r0 = req(0, th, alp, lbar)
     r1 = req(1, th, alp, lbar)
     if th<thresh:
@@ -242,11 +249,14 @@ def tepvt(th, alp, c, lbar, mu):
         else:
             tepvt = lbar * (lam/(lam-1)) * (th*(1-alp)/c )**(1/alp) - (1/(lam-1))
     elif th>= thresh:
-        tepvt = 3
+        tepvt = 3   ## NOT FINISHED
 
     return tepvt
 
 def dwl(th, alp, c, lbar):
+    '''
+    Not finished.. Will give us total DWL at each paramter
+    '''
     teo = teopt(th, alp, c, lbar)
     zo = z(teo, th, alp, c, lbar) - c*teo
     return  zo*teo
@@ -299,7 +309,7 @@ def plotdmg(te=1/2, alp=1/2, th=1, tlbar=Tbar/Lbar):
 
 ## Partition Diagrams from paper
 
-def socpart(c = 1, alp= 2/3, soc_opt= True, cond_opt=True, pv_opt=False, logpop=True):
+def socpart(c = 1, alp= 2/3, mu =0, soc_opt= True, cond_opt=True, pv_opt=False, logpop=True):
     '''Plots loci determining parameter partitions corresponding to 
         Social (and Conditional Social) Optimum
         None, Full, or Partial Enclosure zones
@@ -318,14 +328,15 @@ def socpart(c = 1, alp= 2/3, soc_opt= True, cond_opt=True, pv_opt=False, logpop=
     lo1 = lamO * lo0      
 
     ##### Conditional Optima:  we need separate plot ranges, each side of cv = theta_hat
-    lam_hi = (the_hi*alp)**(1/(1-alp))
+    lam_hi =  Lambda(th = the_hi, alp= alp, mu = mu)
 
     lc  = ( c/(the_lo - 1))**(1/alp)
     lc0 = ( alp*c                  / (( lam_hi*(1+alp) - alp)*(1-alp))  ) **(1/alp)
     lc1 = ( c                      / (the_hi*(1-alp)  ) ) **(1/alp)
 
     ### Private Optima
-    lam = (the_1*alp)**(1/(1-alp))
+    #lam = (the_1*alp)**(1/(1-alp))
+    lam = Lambda(th = the_1, alp= alp, mu = mu)
     ld0 = ( alp*c/( (1-alp)*lam)  ) **(1/alp)
     ld1 = ( c / ( the_1*(1-alp) )  ) **(1/alp)
 
@@ -377,7 +388,7 @@ def socpart(c = 1, alp= 2/3, soc_opt= True, cond_opt=True, pv_opt=False, logpop=
         oline1 = ax.plot(the_1, ld0, color= 'red')
         bline1 = ax.plot(the_1, ld1, color= 'red')
 
-    vline1 = ax.axvline(1/alp, ymax=.95, linestyle=':', color='black')
+    vline1 = ax.axvline((1-(1-alp)*mu)/alp, ymax=.95, linestyle=':', color='black')
     vline2 = ax.axvline(1, ymax=.95, linestyle=':', color='black')
 
     ax.text(cv, np.min(lo0)-.5, r'$\frac{1}{\alpha}$', fontsize=16)

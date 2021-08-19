@@ -3,12 +3,7 @@ root: content
 
 chapters:
 - file: notebooks/enclosure_model
-
-- file: extensions/extensions
-  sections:
-  - file: extensions/skills_diff
-  - file: extensions/partial_exclusive
-  - file: slides/rise
+- file: notebooks/appendix.md
 
 
 
