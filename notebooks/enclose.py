@@ -2,6 +2,11 @@
 # jupyter notebooks and code at https://github.com/jhconning/enclosure
 # Matthew J. Baker and Jonathan Conning
 
+# Things to fix
+# plotY doesnt account for Tbar/Lbar. rescale
+# check:  8/18/20 added mu option for most relevant functions
+# finish: tepvt for interior private..
+
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -48,6 +53,7 @@ def req(te, th=1, alp=1/2, ltbar=1, mu=0):
     lam = Lambda(th, alp, mu)
     return (1-alp)*th * lam**alp * (1+(lam-1)*te)**(-alp) * (ltbar)**(alp)
 
+
 def weq(te, th=1, alp=1/2, tlbar=1, mu =0):
     '''Decentralized Equilibrium wage'''
     lam = Lambda(th, alp, mu)
@@ -77,16 +83,16 @@ def totalq(te, th, alp, mu):
 def plotY(th = 1, lbar = 1, alp = 0.5,  c = 1, mu=0):
     '''Plot total income net of clearing costs'''
     te = np.linspace(0, 1.0, 20)
-    plt.figure(figsize=(5,8))
+    plt.figure(figsize=(8,6))
     plt.title("Output net of enclosure costs as function of te")
     plt.plot(te, ( totalq(te, th, alp, mu) ),  label= r'total' )
     plt.plot(te, ( totalq(te, th, alp, mu)-c*te*Tbar),  label= r'total-cTe' )
-    plt.plot(te, req(te, th, alp, lbar, mu)*te*Tbar,  label= r'$r*Te$')
-    plt.plot(te, c*te*Tbar,   label= r'$c*Te$')
+    #plt.plot(te, req(te, th, alp, lbar, mu)*te*Tbar,  label= r'$r*Te$')
+    #plt.plot(te, c*te*Tbar,   label= r'$c*Te$')
     teo = teopt(th, alp, c, lbar)
     plt.axhline(totalq(0, th, alp, mu), xmin=0, xmax=1, linestyle=':', alpha=0.3)
     plt.xlabel(r'$t_e$')
-    plt.xlim(0,1)
+    plt.xlim(0,1), plt.ylim(70, 120)
     plt.legend()
 
 
