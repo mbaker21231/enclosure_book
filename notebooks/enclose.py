@@ -281,7 +281,7 @@ def plotz(th=1, alp=1/2, c=1, lbar=Lbar, ax=None):
     ax.set_xlabel(r'$t_e$'+' -- pct land enclosed')
     ax.set_ylabel(r'$z(t_e)$')
     ax.set_title(r'$z(t_e) - c\cdot t_e$')
-    return ax
+    #return ax
 
 
 def plotzprime(th, alp, c, lbar):
