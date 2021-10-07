@@ -518,3 +518,37 @@ def prvpart(c = 1, alp= 2/3, full_diag = False, logpop=True, ax=None):
    # else:
    #     fig.savefig('nash_eq.png')
 
+def threeplots(th, alp, c, lbar=2, logpop=False):
+    fig = plt.figure(figsize=(14, 8))
+    axZ= fig.add_subplot(2,2,2)
+    axZP= fig.add_subplot(2,2,4)
+    axP= fig.add_subplot(1,2,1)
+    
+    # z() plot
+    teo= teopt(th, alp, c, lbar)
+    tte = np.linspace(0,1,20)
+    axZ.scatter(teo, z(teo, th, alp, lbar)-c*teo, s=40, clip_on=False )
+    axZ.axvline(teo, ymin=0, ymax=z(teo, th, alp, lbar) ,  linestyle='dashed')
+    axZ.plot(tte, z(tte, th, alp, lbar) - c*tte )  
+    axZ.set_xlim(0,1)
+    axZ.set_ylabel(r'$z(t_e)$')
+    # z prime, r and c plot
+    axZP.scatter(teo, zprime(teo, th, alp, lbar), s=40, clip_on=False )
+    axZP.axvline(teo, ymin=0, ymax=z(teo, th, alp, lbar) ,  linestyle='dashed')
+    axZP.plot(tte, zprime(tte, th, alp, lbar), label=r'$z \prime$' )
+    axZP.set_xlim(0,1)
+    axZP.set_xlabel(r'$t_e$'+' -- pct land enclosed')
+    axZP.set_ylabel(r'$z(t_e)$')
+    axZP.axhline(c, color='red', linestyle ='dashed', label='c')
+    r0 = req(0, th, alp, lbar)
+    r1 = req(1, th, alp, lbar)
+    axZP.plot(tte, req(tte, th, alp, lbar),  label= '$r$')
+    axZP.legend()
+    
+    axP.scatter(th, np.log(lbar), s=40)
+    axP.set_xlim(0.9, 3)
+    axP.set_ylim(0, 4)
+    prvpart(c=c, alp=alp, full_diag=True, logpop=True, ax = axP)
+    
+    plt.show()
+    
