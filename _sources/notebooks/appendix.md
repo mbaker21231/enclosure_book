@@ -1,6 +1,7 @@
 
 
-# Appendix (rough/incomplete)
+# Appendix 
+**(rough/incomplete)**
 
 The socially optimal level of enclosure maximizes total output benefit  to not include the total costs of enclosure $ct_e\bar T$:
 
@@ -100,8 +101,6 @@ $$
 &=F(t_e,l_e)\cdot \theta F(\bar T, \bar L)\\
 \end{align}
 $$
-
-[**^NOTE:**  Big change, but should we use more standard  CD formulation of $T^{\alpha} \bar L ^{1-\alpha}$. ]
 
 Note also for later use that we can write:
 
@@ -210,6 +209,7 @@ When $\theta \ge 1$​ (so $\Lambda^o \geq 1$​) then $z(t_e)$​ is concave in
 ## Interior social enclosure
 
 Solve $z'(t_e)=c$ for $t_e$:
+
 $$
 \bar l^\alpha (1-\alpha)(\Lambda_o - 1)=c{(1+(\Lambda_o-1)t_e)^\alpha}
 $$
@@ -248,28 +248,36 @@ This could be further simplified perhaps but we'll leave it at this.
 |      Partial Enclosure      | $z'(t_e)=c$ |                             n.a.                             |
 |                             |             |                                                              |
 
-## Interior private enclosure
+## Interior enclosure
 
 From the condition 
+
 $$
 \alpha\theta\left(\frac{t_e}{l_e}\right)^{1-\alpha}
     =\left(\frac{1-t_e}{1-l_e}\right)^{1-\alpha}
 $$
+
 From which we can solve for
+
 $$
 l_e^*(t_e) = \frac{\Lambda t_e}{1+(\Lambda-1) t_e } , \quad \Lambda(\theta)=(\alpha\theta)^\frac{1}{1-\alpha}
 $$
+
 Private actors enclose when $r(t_e)>c$
+
 $$
 (1-\alpha)\cdot \theta \cdot \bar l ^\alpha \cdot \left ( \frac{l_e^*(t_e)}{t_e}  \right )^{\alpha}>c
 $$
+
 Substitute in 
+
 $$
 r(t_e)={\theta}\cdot(1-\alpha)\cdot \bar l^{\alpha}
 \cdot \left ( \frac{\Lambda}{(1+(\Lambda -1)t_e)} \right)^\alpha >c
 $$
 
 **Interior**
+
 $$
 {\theta}\cdot(1-\alpha)\cdot \bar l^{\alpha}
 \cdot  \frac{\Lambda^\alpha}{(1+(\Lambda -1)t_e)}  =c
@@ -293,6 +301,7 @@ $$
 ## When is there too much or too little enclosure
 
 Too much enclosure $z'(t_e)<r(t_e)$
+
 $$
 \frac{(\Lambda_o - 1)}{(1+(\Lambda_o-1)t_e)^\alpha}
 <{\theta}
@@ -304,9 +313,6 @@ $$
 <{\theta^{1/\alpha}}
 \cdot  \frac{\Lambda}{(1+(\Lambda -1)t_e)} 
 $$
-
-
-
 
 
 Let's solve for the boundary:
