@@ -21,6 +21,7 @@ $$
 If $\mu=0$​ we have the model described in the paper. If $\mu=1$ then land becomes exclusive/alienable, and the villager can move to the city without losing land rental income streams (i.e. they can sell or lease out their land).  In this latter case efficiency would be restored.
 
 Rearranging: 
+
 $$
 w_c + (1-\mu) \cdot r_c \cdot \frac{T_c}{L_c}=w_e
 $$
