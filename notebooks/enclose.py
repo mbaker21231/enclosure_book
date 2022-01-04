@@ -21,15 +21,15 @@ def f(T, L, a=1/2, th=1):
 
 def mple(te, le, a=1/2, th=1, tlbar=Tbar/Lbar):
     '''marginal product of Labor on enclosed land'''
-    return th*a* f(te,le,a,th)/le  * tlbar**(1-a)
+    return a* f(te,le,a,th)/le  * tlbar**(1-a)
 
 def aple(te, le, a=1/2, th=1, tlbar=Tbar/Lbar):
     '''average product of Labor '''
-    return th*f(te,le,a,th)/le  * tlbar**(1-a)
+    return f(te,le,a,th)/le  * tlbar**(1-a)
 
 def mpte(te, le, a=1/2, th=1, tlbar=Tbar/Lbar):
     '''marginal product of Land on enclosed land'''
-    return th*(1-a)* f(te,le,a,th)/te  * tlbar**(-a)
+    return (1-a)* f(te,le,a,th)/te  * tlbar**(-a)
 
 def mplu(te, le, a=1/2, th=1, tlbar=Tbar/Lbar):
     '''marginal product of Labor on unenclosed land
@@ -45,7 +45,7 @@ def Lambda(th, alp, mu):
       mu = 0 : APL=MPL
       mu = 1 : MPL = MPL etc
     '''
-    return (alp*th/(1-mu+alp*mu) )**(1/(1-alp))
+    return ( (alp*th)/(1-mu+alp*mu) )**(1/(1-alp))
 
 
 def req(te, th=1, alp=1/2, ltbar=1, mu=0):
@@ -62,7 +62,7 @@ def weq(te, th=1, alp=1/2, tlbar=1, mu =0):
 def leo(te, th, alp):
     '''optimal labor allocation (from MPLe = MPLu) given enclosed land share te'''
     lam = th**(1/(1-alp))
-    return lam*te/(1+lam*te-te)
+    return (lam*te)/(1+lam*te-te)
 
 def le(te, th, alp, mu):
     '''eqn labor share on enclosed for given te when 
@@ -72,7 +72,7 @@ def le(te, th, alp, mu):
        mu in (0,1)   in between partly secure
        '''
     lam = Lambda(th, alp, mu)
-    return lam*te/(1+lam*te-te)
+    return (lam*te)/(1+lam*te-te)
 
 def totalq(te, th, alp, mu):
     '''total output in the economy given te and mu.
@@ -124,6 +124,7 @@ def plotle(te=1/2, th=1, alp=1/2, mu=0.5):
     #      + f'{lam: 3.2f}' + r', $\ \ \ \frac{l_e}{t_e}=$'
     #      + f'{leq/(te+0.001):3.1f}', fontsize=16)
     ax.legend(loc='lower right', fontsize=14)
+    print(leq, leop)
 
 
 def plotreq(th=1, alp=1/2, tlbar=1, c=0, wplot=True):
@@ -150,22 +151,26 @@ def plotreq(th=1, alp=1/2, tlbar=1, c=0, wplot=True):
     ax.legend()
 
 
-def plotmpts(te=1/2, alp=1/2, th=1, tlbar=Tbar/Lbar):
-    '''Plot partial eqn labor demand graph '''
-    ll = np.linspace(0.001, 0.999, 50)
-    leop = leo(te, th, alp, mu=1)   #optimal 
-    leam = le(te, th, alp, mu=0)    #private
-    wc = mplu(te, leop)
-    we = mple(te, leam, th=th )
+def plotmpts(te=1/2, alp=1/2, th=1, tlbar=Tbar/Lbar, mu = 0):
+    '''Plot partial eqn labor demand graph 
+       TODO: not yet working for mu different from 0'''
+    ll = np.linspace(0.0001, 0.9999, 50)
+    leop = leo(te, th, alp)         #optimal 
+    leam = le(te, th, alp, mu)      #private
+    wc = weq(te, th, alp, tlbar)
+    we = mple(te, leop, th, tlbar)
+    print(leam, leop)
     fig, ax = plt.subplots(figsize=(10,6))
-    ax.spines['top'].set_visible(False)
-    ax.plot(ll, aplu(te, ll, alp, 1, tlbar), linewidth=4)
-    ax.plot(ll, mplu(te, ll, alp, 1, tlbar)) 
-    ax.plot(ll, mple(te, 1-ll, alp, th, tlbar), linewidth=4)
+    #ax.spines['top'].set_visible(False)
+    ax.plot(ll, mple(te, ll, alp, th, tlbar), linewidth=2, color='k')
+    ax.plot(ll, aplu(1-te, 1-ll, alp, 1, tlbar), linewidth=2, color='k')
+    ax.plot(ll, mplu(1-te, 1-ll, alp, 1, tlbar), linewidth=2, color='k')
+
     ax.set_xlabel('l - labor')
-    ax.vlines(x=1-leam, ymin=0, ymax=we, linestyle=':') 
-    ax.vlines(x=leop, ymin=0, ymax=wc, linestyle=':') 
-    ax.axhline(weq(te, th=1, alp=1/2, tlbar=1), linestyle=':')
+    ax.vlines(x=leam, ymin=0, ymax=wc, linestyle=':') 
+    ax.vlines(x=leop, ymin=0, ymax=aplu(1-te, 1-leop, 1, tlbar), 
+              linestyle=':') 
+    ax.axhline(weq(te, th, alp, tlbar), linestyle=':')
     ax.set_title('Labor allocation given '+r'$t_e$')
     ax.set_ylim(0,1.5)
     ax.set_xlim(0,1)
