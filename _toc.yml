@@ -1,9 +1,14 @@
 format: jb-book
 root: content
 
-chapters:
-- file: notebooks/enclosure_model
-- file: notebooks/appendix.md
+parts:
+- caption: Model
+  chapters:
+  - file: notebooks/enclosure_model
+  - file: notebooks/appendix.md
+- caption: Extensions
+  chapters:
+  - file: extensions/partial_exclusive.md
 
 
 
