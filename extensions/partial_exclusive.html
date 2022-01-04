@@ -41,7 +41,7 @@
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -173,7 +173,7 @@
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
 </div>
 
@@ -204,12 +204,118 @@
         </div>
 
         <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
         </div>
     </div>
 </div>
-    <div id="main-content" class="row">
+    <!-- Table of contents that is only displayed when printing the page -->
+    <div id="jb-print-docs-body" class="onlyprint">
+        <h1>Partial Exclusivity</h1>
+        <!-- Table of contents -->
+        <div id="print-main-content" class="row">
+            <div class="col-12 col-md-12 pl-md-5 pr-md-5">
+            <div id="jb-print-toc">
+                
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="partial-exclusivity">
+<h1>Partial Exclusivity<a class="headerlink" href="#partial-exclusivity" title="Permalink to this headline">¶</a></h1>
+<p>We’ve given two different (complementary) interpretations of the mis-allocation:</p>
+<ul class="simple">
+<li><p><strong>unregulated-access:</strong> laborers continue to enter the unenclosed sector to capture rents, but this creates a negative externality in that it reduces the rents of others in the sector.</p></li>
+<li><p><strong>insecure property rights</strong>: land rights are established via possession and membership hence laborers migrate less for fear of losing land and rents.</p></li>
+</ul>
+<p>The latter interpretation means that laborers migrate until they are indifferent between the higher wage in the enclosed sector and the lower wage but land perks in the customary sector:</p>
+<div class="math notranslate nohighlight">
+\[
+w_c + r_c \cdot \bar T_i = w_e
+\]</div>
+<p>Implicitly, land rights are not alienable – the laborer cannot sell and cash out.</p>
+<p>But suppose that when they move to the city or other opportunity they have probability <span class="math notranslate nohighlight">\(\mu &gt; 0\)</span> of retaining their use-rights. Or they can, in effect, lease out those rights and get paid some fraction of the rents they’d capture had they stayed.  Then the relation becomes:</p>
+<div class="math notranslate nohighlight">
+\[
+w_c + r_c \cdot \bar T_i = w_e + \mu r_c \cdot T_i
+\]</div>
+<p>If <span class="math notranslate nohighlight">\(\mu=0\)</span>​ we have the model described in the paper. If <span class="math notranslate nohighlight">\(\mu=1\)</span> then land becomes exclusive/alienable, and the villager can move to the city without losing land rental income streams (i.e. they can sell or lease out their land).  In this latter case efficiency would be restored.</p>
+<p>Rearranging:</p>
+<div class="math notranslate nohighlight">
+\[
+w_c + (1-\mu) \cdot r_c \cdot \frac{T_c}{L_c}=w_e
+\]</div>
+<p>This way of writing things might line up with a <strong>regulated commons</strong> view.  Instead of unregulated access, those who live and use land in the community are subject to a user-tax (like a Pigouvian tax) <span class="math notranslate nohighlight">\(\mu\)</span>  (where do the revenues go?)</p>
+<p>Under either interpretation, note from Euler’s theorem that <span class="math notranslate nohighlight">\(F(L_c, T_c) = F_L \cdot L_c + F_T \cdot T_c\)</span> and so we can write:</p>
+<div class="math notranslate nohighlight">
+\[
+APL = \frac{F}{L_c}=F_L + F_T \cdot \frac{T_c}{L_c}
+\]</div>
+<p>Note we can write <span class="math notranslate nohighlight">\(F_T=(1-\alpha)\frac{F}{T}\)</span> and therefore</p>
+<div class="math notranslate nohighlight">
+\[
+(1-\mu) \cdot F_T \cdot \frac{T}{L}= (1-\mu)(1-\alpha)\frac{F}{L}
+\]</div>
+<p>Hence a laborer’s earnings in the commons is:</p>
+<div class="math notranslate nohighlight">
+\[
+F_L+(1-\mu) \cdot F_T \cdot \frac{T}{L}=\alpha \frac{F}{L}
++(1-\mu)(1-\alpha)\frac{F}{L}
+\]</div>
+<p>Gathering terms and rearranging the relevant FOC is now</p>
+<div class="math notranslate nohighlight">
+\[
+[\alpha +(1-\mu)(1-\alpha)]APL_c=MPL_e
+\]</div>
+<p>Or</p>
+<div class="math notranslate nohighlight">
+\[
+[1-\mu\cdot(1-\alpha)]APL_c=MPL_e
+\]</div>
+<p>Note that when <span class="math notranslate nohighlight">\(\mu=1\)</span> we get the efficient <span class="math notranslate nohighlight">\(MPL_c=MPL_e\)</span> and when <span class="math notranslate nohighlight">\(\mu=0\)</span> we get the case analyzed in the paper where <span class="math notranslate nohighlight">\(APL_c=MPL_e\)</span>.</p>
+<p>For any <span class="math notranslate nohighlight">\(\mu\in(0,1)\)</span> we instead have this FOC:</p>
+<div class="math notranslate nohighlight">
+\[
+\alpha  \theta \left ( \frac{t_e}{l_e} \right ) ^{1-\alpha} = (1-\mu(1-\alpha)) \cdot\left ( \frac{1-t_e}{1-l_e} \right ) ^{1-\alpha}
+\]</div>
+<p>This will look very similar to everything from before</p>
+<div class="math notranslate nohighlight">
+\[
+l_e^p(t_e) = \frac{\Lambda^p t_e}{1+(\Lambda^p-1) t_e }
+\]</div>
+<p>But with</p>
+<div class="math notranslate nohighlight">
+\[
+\Lambda^p=\left ( \frac{\alpha\theta}{1+\mu \cdot (1-\alpha)}  \right)^\frac{1}{1-\alpha}
+\]</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./extensions"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </div>
+        </div>
+    </div>
+    <div id="main-content" class="row noprint">
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
         
               <div>
@@ -320,15 +426,13 @@ l_e^p(t_e) = \frac{\Lambda^p t_e}{1+(\Lambda^p-1) t_e }
         </div>
     </div>
     <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Matthew J. Baker and Jonathan Conning<br/>
-        
-            &copy; Copyright 2021.<br/>
-      </p>
-    </div>
-  </footer>
+  <p>
+    
+      By Matthew J. Baker and Jonathan Conning<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
 </main>
 
 
