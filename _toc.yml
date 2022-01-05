@@ -9,7 +9,7 @@ parts:
 - caption: Ideas and Extensions
   chapters:
   - file: extensions/partial_exclusive.md
-  - file: extensions/labor_plot.md
+  - file: extensions/labor_plot
 
 
 
