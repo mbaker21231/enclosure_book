@@ -36,7 +36,7 @@ def mplu(te, le, a=1/2, th=1, tlbar=Tbar/Lbar):
        same tech but useful to have other name'''
     return mple(te, le, a, th, tlbar)
 
-def aplu(te,le, a=1/2, th=1, tlbar=Tbar/Lbar):
+def aplu(te, le, a=1/2, th=1, tlbar=Tbar/Lbar):
     '''average product of Labor on unenclosed land'''
     return aple(te, le, a, th, tlbar)
 
@@ -154,26 +154,63 @@ def plotreq(th=1, alp=1/2, tlbar=1, c=0, wplot=True):
 def plotmpts(te=1/2, alp=1/2, th=1, tlbar=Tbar/Lbar, mu = 0):
     '''Plot partial eqn labor demand graph 
        TODO: not yet working for mu different from 0'''
-    ll = np.linspace(0.0001, 0.9999, 50)
+    ll = np.linspace(0.0001, 0.9999, 400)
     leop = leo(te, th, alp)         #optimal 
     leam = le(te, th, alp, mu)      #private
-    wc = weq(te, th, alp, tlbar)
-    we = mple(te, leop, th, tlbar)
-    print(leam, leop)
-    fig, ax = plt.subplots(figsize=(10,6))
+    WindowsError = weq(te, th, alp, tlbar)
+    we = weq(te, th, alp, tlbar)
+    wo = mple(te, leop, alp, th, tlbar)
+    wc = mplu(1-te, 1-leam, alp, 1, tlbar)
+    fig, ax = plt.subplots(figsize=(8,6))
     #ax.spines['top'].set_visible(False)
-    ax.plot(ll, mple(te, ll, alp, th, tlbar), linewidth=2, color='k')
-    ax.plot(ll, aplu(1-te, 1-ll, alp, 1, tlbar), linewidth=2, color='k')
-    ax.plot(ll, mplu(1-te, 1-ll, alp, 1, tlbar), linewidth=2, color='k')
+    mpe = mple(te, ll, alp, th, tlbar)
+    apu = aplu(1-te, 1-ll, alp, 1, tlbar)
+    mpu = mplu(1-te, 1-ll, alp, 1, tlbar)
 
-    ax.set_xlabel('l - labor')
-    ax.vlines(x=leam, ymin=0, ymax=wc, linestyle=':') 
-    ax.vlines(x=leop, ymin=0, ymax=aplu(1-te, 1-leop, 1, tlbar), 
+    ax.plot(ll, mpe, linewidth=2, color='k')
+    ax.plot(ll, apu, linewidth=2, color='k')
+    ax.plot(ll, mpu, linewidth=2, color='k')   
+    ax.fill_between(ll, mpe, mpu, 
+                    where=(ll>=leam)&(ll<=leop), 
+                    hatch= '//',
+                    color='none',
+                    edgecolor='k')
+
+    #ax.set_xlabel(r'$l_e$ - share')
+    ax.vlines(x=leam, ymin=0, ymax=we, linestyle=':') 
+    ax.vlines(x=leop, ymin=0, ymax=wo, 
               linestyle=':') 
-    ax.axhline(weq(te, th, alp, tlbar), linestyle=':')
-    ax.set_title('Labor allocation given '+r'$t_e$')
+    ax.axhline(we, linestyle=':')
+    ax.axhline(wc, linestyle=':')
+    ax.set_xticklabels([])
+    ax.set_yticklabels([])
+    ax.set_title('Labor Allocations, given '+r'$t_e$'+' = '+f'{te:2.2f}')
     ax.set_ylim(0,1.5)
     ax.set_xlim(0,1)
+    ax.text(1.01, we, r'$w_e$', fontsize=12)
+    ax.text(1.01, wc, r'$w_c$', fontsize=12)
+    ax.text(leam, -0.1, r'$l_e^*(t_e)$', fontsize=12,ha='center')
+    ax.text(leop, -0.1, r'$l_e^o(t_e)$', fontsize=12,ha='center')
+
+    ax.annotate(r'$MPL_c$',xy=(0.85, mplu(1-te, 0.15, alp, 1, tlbar)), 
+                textcoords="offset points", 
+                 xytext=(-30,20), fontsize=14)
+    ax.annotate(r'$APL_c$',xy=(0.65, aplu(1-te, 0.35, alp, 1, tlbar)), 
+                textcoords="offset points", 
+                 xytext=(-24,15), fontsize=14)
+    ax.annotate(r'$MPL_e$',xy=(0.8,  mple(te, 0.8, alp, th, tlbar)), 
+                textcoords="offset points", 
+                 xytext=(20,-20), fontsize=14)
+
+    labels = ['A', 'B', 'C', 'F', '', '', '', '', '0']
+    xx = [leam, leam,    leop, 1, 1, 1, leam, leop,0]
+    yy = [wc, we, wo, 0, we, wc, 0, 0, 0]    
+    for x, y, lab in zip(xx, yy, labels):
+        ax.scatter(x, y, marker='o', s=20, c ='k',clip_on=False ) 
+        plt.annotate(lab, (x,y), 
+                textcoords="offset points", # how to position the text
+                 xytext=(-5,7), # distance from text to points (x,y)
+                 ha='center', fontsize=12)
    
 
 def simplempl(te=1/2, alp=1/2, th=1, tlbar=Tbar/Lbar):

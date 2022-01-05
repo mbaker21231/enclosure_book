@@ -6,9 +6,10 @@ parts:
   chapters:
   - file: notebooks/enclosure_model
   - file: notebooks/appendix.md
-- caption: Extensions
+- caption: Ideas and Extensions
   chapters:
   - file: extensions/partial_exclusive.md
+  - file: extensions/labor_plot.md
 
 
 
