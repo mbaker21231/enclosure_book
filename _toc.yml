@@ -8,8 +8,9 @@ parts:
   - file: notebooks/appendix.md
 - caption: Ideas and Extensions
   chapters:
-  - file: extensions/partial_exclusive.md
-  - file: extensions/labor_plot
+  - file: notes/partial_exclusive.md
+  - file: notebooks/labor_plot
+  - file: notebooks/enclosure_manuf.ipynb
 
 
 

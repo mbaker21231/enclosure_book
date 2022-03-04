@@ -10,6 +10,8 @@ logo: logo2.png
 execute:
   execute_notebooks: cache
   exclude_patterns: []  
+  
+only_build_toc_files: true
 
 # Define the name of the latex output file for PDF builds
 latex:
@@ -27,7 +29,18 @@ repository:
   branch: master  # Which branch of the repository should be used when creating links (optional)
   
 parse:
-  myst_extended_syntax      : true 
+  myst_enable_extensions:  # default extensions to enable in the myst parser. See https://myst-parser.readthedocs.io/en/latest/using/syntax-optional.html
+    - amsmath
+    - colon_fence
+    - figure-md
+    - deflist
+    - dollarmath
+    - html_admonition
+    - html_image
+    - linkify
+    - replacements
+    - smartquotes
+    - substitution
 
 # Add GitHub buttons to your book
 # See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
