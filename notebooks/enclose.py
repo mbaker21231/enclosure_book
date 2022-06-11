@@ -41,7 +41,7 @@ def aplu(te, le, a=1/2, th=1, tlbar=Tbar/Lbar):
     return aple(te, le, a, th, tlbar)
 
 def Lambda(th, alp, mu):
-    ''' Key expression.
+    ''' Key expression for private enclosure.
       mu = 0 : APL=MPL
       mu = 1 : MPL = MPL etc
     '''
@@ -211,6 +211,7 @@ def plotmpts(te=1/2, alp=1/2, th=1, tlbar=Tbar/Lbar, mu = 0):
                 textcoords="offset points", # how to position the text
                  xytext=(-5,7), # distance from text to points (x,y)
                  ha='center', fontsize=12)
+    return fig, ax
    
 
 def simplempl(te=1/2, alp=1/2, th=1, tlbar=Tbar/Lbar):
@@ -291,23 +292,68 @@ def tepvt(th, alp, c, lbar, mu):
     r1 = req(1, th, alp, lbar)
     if th<thresh:
         if r0>=c:
-            tepvt = 1
+            tep = 1
         elif r1<c:
-            tepvt = 0
+            tep = 0
         else:
-            tepvt = lbar * (lam/(lam-1)) * (th*(1-alp)/c )**(1/alp) - (1/(lam-1))
-    elif th>= thresh:
-        tepvt = 3   ## NOT FINISHED
+            tep = lbar * (lam/(lam-1)) * (th*(1-alp)/c )**(1/alp) - (1/(lam-1))
+    
+    elif th>= thresh:  
+        if r1>=c:
+            tep = 1
+        elif r0<c:
+            tep = 0
+        else:
+            tep = lbar * (lam/(lam-1)) * (th*(1-alp)/c )**(1/alp) - (1/(lam-1))
 
-    return tepvt
+    return tep
+
+
+def tepvt_g(th, alp, c, lbar, mu):
+    '''Private enclosure rate (global game refinement)
+        just like pvtpart() but adjuss for global game
+        If theta < theta_hi then global game refinement says enclose fully if
+        tep (from pvtpart) <= 0.5 otherwise no enclosre.
+        '''
+    thresh = (1-mu+alp*mu)/alp    
+    tep = tepvt(th,alp,c, lbar, mu=0)
+    
+    tepg = tep
+    if (tep==1) or (tep==0):
+        tepg = tep
+    elif (th < thresh):
+        if (tep > 0.5):
+            tepg = 0
+        elif (tep <= 0.5):
+            tepg = 1
+
+    return tepg
+
+
 
 def dwl(th, alp, c, lbar):
     '''
-    Not finished.. Will give us total DWL at each paramter
+    Returns DWL at each paramter
     '''
-    teo = teopt(th, alp, c, lbar)
-    zo = z(teo, th, alp, c, lbar) - c*teo
-    return  zo*teo
+    teo= teopt(th, alp, c, lbar)
+    tep = tepvt(th,alp,c, lbar, mu=0)
+    teg = tepvt_g(th,alp,c, lbar, mu=0)
+
+    zo = z(teo, th, alp, lbar) - c*teo
+    zg = z(teg, th, alp, lbar) - c*teg
+    return  zo-zg
+
+def dwlpct(th, alp, c, lbar):
+    '''
+    Returns actual/potential at each paramter
+    '''
+    teo= teopt(th, alp, c, lbar)
+    tep = tepvt(th,alp,c, lbar, mu=0)
+    teg = tepvt_g(th,alp,c, lbar, mu=0)
+
+    zo = z(teo, th, alp, lbar) - c*teo
+    zg = z(teg, th, alp, lbar) - c*teg
+    return  zg/zo
 
 
 def plotz(th=1, alp=1/2, c=1, lbar=Lbar, ax=None):
@@ -449,12 +495,13 @@ def socpart(c = 1, alp= 2/3, mu =0, soc_opt= True, cond_opt=True, pv_opt=False, 
 
 
 def prvpart(c = 1, alp= 2/3, full_diag = False, logpop=True, ax=None):
+
     if ax is None:
         fig, ax = plt.subplots(figsize=(10, 8))
     start = 1.1
     finish = 2.1
     cv = 1 / alp
-    the_1 = np.arange(1.1, 2.1, .01)
+    the_1 = np.arange(1.1, finish, .01)
 
     ### Truncated range for the other stuff
 
@@ -506,12 +553,12 @@ def prvpart(c = 1, alp= 2/3, full_diag = False, logpop=True, ax=None):
     xpos[1] = xpos[1]-.02
     ax.xaxis.set_label_coords(xpos[0], xpos[1])
 
-    ax.set_xticks([])
+    #ax.set_xticks([])
     ax.set_ylim(0,6)
     if logpop:
         #ax.set_yticks([])
-        ax.set_ylim(-0.5,7)
-        #ax.autoscale()
+        ax.set_ylim(-0.5,4)
+        ax.autoscale()
         ylbl = ax.set_ylabel(r'$ln(\overline{l})$', fontsize=18)   
 
     ep = np.max(the_1)+.021
@@ -561,6 +608,12 @@ def prvpart(c = 1, alp= 2/3, full_diag = False, logpop=True, ax=None):
    #     fig.savefig('nash_eq.png')
 
 def threeplots(th, alp, c, lbar=2, logpop=False):
+    '''
+    axP  :  left subplot overlap social/private; mostly drawn by prvpart()
+    axZ  :  top right subplot planner's  z(t_e) - c * t_e
+    axZP :  bottom right subplot r vs z' vs c
+    
+    '''
     fig = plt.figure(figsize=(14, 8))
     axZ= fig.add_subplot(2,2,2)
     axZP= fig.add_subplot(2,2,4)
@@ -569,18 +622,39 @@ def threeplots(th, alp, c, lbar=2, logpop=False):
     # z() plot
     teo= teopt(th, alp, c, lbar)
     tte = np.linspace(0,1,20)
+    tep = tepvt(th,alp,c, lbar, mu=0)
+    teg = tepvt_g(th,alp,c, lbar, mu=0)
+
+    dwlp = dwlpct(th, alp, c, lbar)
+
+
+    # top right z(t_e) - c * t_e plot
     axZ.scatter(teo, z(teo, th, alp, lbar)-c*teo, s=40, clip_on=False )
-    axZ.axvline(teo, ymin=0, ymax=z(teo, th, alp, lbar) ,  linestyle='dashed')
-    axZ.plot(tte, z(tte, th, alp, lbar) - c*tte )  
+    axZ.scatter(tep, z(tep, th, alp, lbar)-c*tep, s=40, clip_on=False,color='orange' )
+    axZ.scatter(teg, z(teg, th, alp, lbar)-c*teg, s=40, clip_on=False, marker='X', color='red' )
+    axZ.axvline(teo, ymin=0, ymax=z(teo, th, alp, lbar) -c*teo,  linestyle='dashed')
+    axZ.axvline(tep, ymin=0, ymax=z(tep, th, alp, lbar)-c*tep ,  linestyle='dashed', color='orange')
+
+    axZ.plot(tte, z(tte, th, alp, lbar) - c*tte )   
     axZ.set_xlim(0,1)
-    axZ.set_ylabel(r'$z(t_e)$')
+    #axZ.set_ylim(bottom=0, top=None)
+    axZ.set_ylabel(r'$z(t_e)-c \cdot t_e $')
+    #Ypct = (z(teg, th, alp, lbar)-c*teg)/(z(teo, th, alp, lbar)-c*teo)
+    axZ.set_title(f'z-ct ({dwlp: .0%} potential)')
+
+
     # z prime, r and c plot
     axZP.scatter(teo, zprime(teo, th, alp, lbar), s=40, clip_on=False )
-    axZP.axvline(teo, ymin=0, ymax=z(teo, th, alp, lbar) ,  linestyle='dashed')
+    axZP.scatter(tep, req(tep, th, alp, lbar), s=40, clip_on=False, color='orange' )
+    axZP.scatter(teg, req(teg, th, alp, lbar), s=40, clip_on=False, marker='X', color='red' )
+
+
+    axZP.axvline(teo, ymin=0, ymax=1 ,  linestyle='dashed')
+    axZP.axvline(tep, ymin=0, ymax=1 ,  linestyle='dashed', color='orange')
     axZP.plot(tte, zprime(tte, th, alp, lbar), label=r'$z \prime$' )
     axZP.set_xlim(0,1)
     axZP.set_xlabel(r'$t_e$'+' -- pct land enclosed')
-    axZP.set_ylabel(r'$z(t_e)$')
+    axZP.set_ylabel(r'$c, r(t_e), z \prime (t_e) $')
     axZP.axhline(c, color='red', linestyle ='dashed', label='c')
     r0 = req(0, th, alp, lbar)
     r1 = req(1, th, alp, lbar)
